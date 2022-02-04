@@ -1,0 +1,31 @@
+{
+    "data": {
+        "test": {
+            "total_score": 0,
+            "total_games": 0,
+            "average": 0,
+            "all_games": []
+        },
+        "U0313CRTPEK": {
+            "total_score": 8,
+            "total_games": 2,
+            "average": 4.0,
+            "all_games": [
+                {
+                    "game_num": 229,
+                    "tries": 4,
+                    "hard_mode": true,
+                    "completed": true,
+                    "shared": ":black_large_square::large_yellow_square::large_green_square::black_large_square::black_large_square:\n:large_yellow_square::black_large_square::large_green_square::large_yellow_square::large_yellow_square:\n:large_green_square::black_large_square::large_green_square::large_green_square::large_green_square:\n:large_green_square::large_green_square::large_green_square::large_green_square::large_green_square:"
+                },
+                {
+                    "game_num": 229,
+                    "tries": 4,
+                    "hard_mode": true,
+                    "completed": true,
+                    "shared": ":black_large_square::large_yellow_square::large_green_square::black_large_square::black_large_square:\n:large_yellow_square::black_large_square::large_green_square::large_yellow_square::large_yellow_square:\n:large_green_square::black_large_square::large_green_square::large_green_square::large_green_square:\n:large_green_square::large_green_square::large_green_square::large_green_square::large_green_square:"
+                }
+            ]
+        }
+    }
+}
