@@ -1,4 +1,12 @@
 def analyze_wordle_score(msg_payload: dict) -> dict:
+    """Gets info from raw slack response
+
+    Args:
+        msg_payload (dict): event notification from slack response
+
+    Returns:
+        dict: a dictionary of formatted data about user and the game
+    """
     score_str = msg_payload["text"]
     score_arr = score_str.split("\n")
     game_info = score_arr[0]
@@ -9,6 +17,15 @@ def analyze_wordle_score(msg_payload: dict) -> dict:
 
 
 def format_game_info(game_info: str, game_res_str: str) -> dict:
+    """Formats the info for ame in a dictionary
+
+    Args:
+        game_info (str): first line of the result as array of
+        game_res_str (str): emoji part of the result
+
+    Returns:
+        dict: Formatted dictionary
+    """
     info = game_info.split(" ")
     game_num = info[1]
     game_res = info[2][0]
@@ -26,6 +43,14 @@ def format_game_info(game_info: str, game_res_str: str) -> dict:
 
 
 def was_game_completed(game_res: str) -> bool:
+    """Checks if the game was completed nadn returns bool 
+
+    Args:
+        game_res (str): emoji part of the result string
+
+    Returns:
+        bool: if the game was completed
+    """
     if len(game_res) <= 6:
         if (
             game_res[-1]

@@ -3,19 +3,39 @@ import re
 try:
     from utils.bolt_init_helper import app
     from service.events.messages import analyze_wordle_score
-    from store.scores import log_scores, check_game_exists_user
+    from store.scores import (
+        log_scores,
+        check_game_exists_user,
+        check_user_exists,
+        create_user_in_store,
+    )
 except ImportError:
     from ..utils.bolt_init_helper import app
     from ..service.events.messages import analyze_wordle_score
-    from ..store.scores import log_scores, check_game_exists_user
+    from ..store.scores import (
+        log_scores,
+        check_game_exists_user,
+        check_user_exists,
+        create_user_in_store,
+    )
 
 
 @app.message(re.compile("(Wordle) \d+ [123456]\/6\*?"))
 def get_wordle_score_msg(message) -> None:
+    """Grab the event where message is a wordle score and analyze item
+
+    Args:
+        message ([type]): message payload
+    """
     score = analyze_wordle_score(message)
     user_info: str = message["user"]
 
-    game_exists = check_game_exists_user(user_info, score)
+    game_exists: bool = False
+
+    if check_user_exists(user_info):
+        game_exists = check_game_exists_user(user_info, score)
+    else:
+        create_user_in_store(user_info)
 
     if game_exists:
         app.client.chat_postEphemeral(
