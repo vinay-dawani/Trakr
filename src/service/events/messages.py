@@ -15,8 +15,6 @@ def analyze_wordle_score(msg_payload: dict) -> dict:
     game_info = re.search("(Wordle) \d+ [123456X]\/6\*?", score_str).group()
     game_res = re.search("((:\w+:(\\n)?)+)", score_str).group()
 
-    print(game_res, game_info)
-
     game_info = format_game_info(game_info, game_res)
     return game_info
 
