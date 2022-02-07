@@ -26,7 +26,7 @@ def log_scores(user: str, score: dict):
             else:
                 input_user_scores(user, score)
 
-
+# TODO: missing some try/catch
 def create_scores_store() -> None:
     """makes a json file with an empty object"""
     with open(score_file, "w", encoding="utf-8") as jsonfile:

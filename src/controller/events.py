@@ -20,7 +20,7 @@ except ImportError:
     )
 
 
-@app.message(re.compile("(Wordle) \d+ [123456]\/6\*?"))
+@app.message(re.compile("[\w*\s*\d*!\.,@#$%^&\*]*(Wordle) \d+ [123456X]\/6\*?"))
 def get_wordle_score_msg(message) -> None:
     """Grab the event where message is a wordle score and analyze item
 

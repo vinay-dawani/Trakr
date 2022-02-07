@@ -5,11 +5,11 @@ from pathlib import Path
 
 try:
     from utils.bolt_init_helper import app
-    from controller import events
+    from controller import events, commands
     from store.scores import create_scores_store
 except ImportError:
     from .utils.bolt_init_helper import app
-    from .controller import events
+    from .controller import events, commands
     from .store.scores import create_scores_store
 
 load_dotenv()
