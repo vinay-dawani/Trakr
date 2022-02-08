@@ -6,7 +6,7 @@ except ImportError:
     from ...utils.bolt_helpers import get_channel_history, get_thread
 
 
-def analyze_historical_scores(channel_id: str):
+def get_historical_scores(channel_id: str) -> list[dict]:
     """retrieves, analyzes and logs historical scores
 
     Args:
@@ -23,8 +23,11 @@ def analyze_historical_scores(channel_id: str):
             t_data = retrieve_and_collect_threads(channel_id, score)
             thread_scores.extend(t_data)
 
-    wordle_scores.extend(thread_scores)
-    print(len(wordle_scores))
+    wordle_scores.extend(
+        thread_scores
+    )  # collection of all wordle messages in channel history
+
+    return wordle_scores
 
 
 def retrieve_and_collect_threads(channel_id: str, msg: dict) -> list[dict]:
