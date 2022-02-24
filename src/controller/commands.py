@@ -1,9 +1,8 @@
-from cgitb import text
-
-
 try:
     from utils.bolt_init_helper import app
+    from utils.bolt_helpers import build_leaderboard_blocks
     from service.commands.scan_command import get_historical_scores
+    from service.commands.topall_command import get_top_leaderboard_data
     from service.events.messages import analyze_wordle_score
     from store.scores import (
         log_scores,
@@ -13,7 +12,9 @@ try:
     )
 except ImportError:
     from ..utils.bolt_init_helper import app
+    from ..utils.bolt_helpers import build_leaderboard_blocks
     from ..service.commands.scan_command import get_historical_scores
+    from ..service.commands.topall_command import get_top_leaderboard_data
     from ..service.events.messages import analyze_wordle_score
     from ..store.scores import (
         log_scores,
@@ -31,7 +32,7 @@ def scan_build_history(ack, body) -> None:
         ack ([type]): [description]
         body ([type]): message payload
     """
-    ack(f"starting the scan :wink:")
+    ack("starting the scan :wink:")
 
     channel_id = body["channel_id"]
     wordle_scores = get_historical_scores(channel_id)
@@ -61,3 +62,15 @@ def scan_build_history(ack, body) -> None:
         text=f"Scores logged!! Succesfully logged {logged} scores out of {len(wordle_scores)}",
         user=body["user_id"],
     )
+
+
+@app.command("/topall")
+def get_all_time_leaderboard(ack, respond) -> None:
+    """Returns a leaderboard with top average scores of all time"""
+
+    ack()
+
+    data = get_top_leaderboard_data()
+    blocks = build_leaderboard_blocks(data)
+
+    respond(blocks=blocks["blocks"])
