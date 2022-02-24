@@ -51,6 +51,8 @@ def build_leaderboard_blocks(data: dict) -> dict:
     # * The leaderboard message right now mentions the user but since 'respond' API is used,
     # * the message is sent as ephermal and notif are not pushed.
     # TIP: A valid workaround can be to get used profile from id and use 'display_name' property
+    # * Also table comes out a bit weird right now because of spacing isuues but when above is
+    # * implemented, then an ascii table can be made or an image that is then attached.
     for i, (k, v) in enumerate(data.items(), 1):
         xyz = (
             f"{i}\t\t<@{k}>\t\t\t\t{v['avg_guess']:.3f}\t\t\t\t\t\t{v['total_games']}\n"

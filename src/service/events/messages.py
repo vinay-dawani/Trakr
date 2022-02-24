@@ -1,4 +1,5 @@
 import re
+from tokenize import Double
 
 
 def analyze_wordle_score(msg_payload: dict) -> dict:
@@ -11,15 +12,16 @@ def analyze_wordle_score(msg_payload: dict) -> dict:
         dict: a dictionary of formatted data about user and the game
     """
     score_str = msg_payload["text"]
+    score_time = msg_payload["ts"]
     # score_arr = score_str.split("\n")
     game_info = re.search("(Wordle) \d+ [123456X]\/6\*?", score_str).group()
     game_res = re.search("((:\w+:(\\n)?)+)", score_str).group()
 
-    game_info = format_game_info(game_info, game_res)
+    game_info = format_game_info(game_info, game_res, score_time)
     return game_info
 
 
-def format_game_info(game_info: str, game_res_str: str) -> dict:
+def format_game_info(game_info: str, game_res_str: str, ts: str) -> dict:
     """Formats the info for ame in a dictionary
 
     Args:
@@ -44,6 +46,7 @@ def format_game_info(game_info: str, game_res_str: str) -> dict:
         "hard_mode": bool(hard_mode),
         "completed": bool(completed),
         "shared": str(shared),
+        "ts": float(ts),
     }
 
 
