@@ -26,6 +26,7 @@ def log_scores(user: str, score: dict):
             else:
                 input_user_scores(user, score)
 
+
 # TODO: missing some try/catch
 def create_scores_store() -> None:
     """makes a json file with an empty object"""
@@ -142,3 +143,16 @@ def check_user_exists(user: str) -> bool:
             return True
         else:
             return False
+
+
+def get_all_scores() -> dict:
+    """Fetches all the scores in the database
+
+    Returns:
+        dict: all scores for all users
+    """
+    with open(score_file, "r", encoding="utf-8") as jsonfile:
+        data = json.load(jsonfile)["data"]
+        data.pop("test")
+
+    return data
