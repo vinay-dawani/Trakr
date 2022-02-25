@@ -45,7 +45,7 @@ def build_leaderboard_blocks(data: dict) -> dict:
     Returns:
         dict: blocks that can be appended in response message
     """
-    score_str = "#\t\tname\t\t\t\t\taverage guess\t\ttotal games\n----------------------------------------------------------------\n"
+    score_str = "##\t\tname\t\t\t\t\taverage guess\t\ttotal games\n----------------------------------------------------------------\n"
     data = dict(sorted(data.items(), key=lambda x: x[1]["avg_guess"]))
 
     # * The leaderboard message right now mentions the user but since 'respond' API is used,
@@ -78,3 +78,9 @@ def build_leaderboard_blocks(data: dict) -> dict:
     }
 
     return blocks
+
+
+def get_displayname_from_id(user_id: str) -> str:
+    data = app.client.users_profile_get(user=user_id)
+
+    return data["profile"]["display_name"]
