@@ -1,8 +1,8 @@
 import re
-from tokenize import Double
+from typing import Optional
 
 
-def analyze_wordle_score(msg_payload: dict) -> dict:
+def analyze_wordle_score(msg_payload: dict) -> Optional[dict]:
     """Gets info from raw slack response
 
     Args:
@@ -14,8 +14,13 @@ def analyze_wordle_score(msg_payload: dict) -> dict:
     score_str = msg_payload["text"]
     score_time = msg_payload["ts"]
     # score_arr = score_str.split("\n")
-    game_info = re.search("(Wordle) \d+ [123456X]\/6\*?", score_str).group()
-    game_res = re.search("((:\w+:(\\n)?)+)", score_str).group()
+    try:
+        game_info = re.search("(Wordle) \d+ [123456X]\/6\*?", score_str).group()
+        game_res = re.search("((:\w+:(\\n)?)+)", score_str).group()
+    except AttributeError as e:
+        print(e)
+        print(score_str)
+        return None
 
     game_info = format_game_info(game_info, game_res, score_time)
     return game_info

@@ -30,6 +30,14 @@ def get_wordle_score_msg(message) -> None:
     score = analyze_wordle_score(message)
     user_info: str = message["user"]
 
+    if score is None:
+        app.client.chat_postEphemeral(
+            channel=message["channel"],
+            text="Are you trying to send a wordle score? Looks like it's missing some stuff :eyes:",
+            user=user_info,
+        )
+        return
+
     game_exists: bool = False
 
     if check_user_exists(user_info):

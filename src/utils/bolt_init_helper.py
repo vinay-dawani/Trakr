@@ -1,7 +1,9 @@
 import os
 from dotenv import load_dotenv
+from pathlib import Path
 from slack_bolt import App
 
+# load_dotenv(dotenv_path=Path(r".prod.env"))
 load_dotenv()
 
 # Initialization of the slack app

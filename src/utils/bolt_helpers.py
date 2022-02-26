@@ -14,6 +14,7 @@ def get_channel_history(ch_id: str) -> list[dict]:
         list[dict]: a list of message dictionaries
     """
     data = app.client.conversations_history(channel=ch_id, oldest=1640995200)
+    print(data)
     return data["messages"]
 
 

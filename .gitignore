@@ -1,5 +1,7 @@
 .python-version
 .env
+.dev.env
+.prod.env
 .vscode
 .pytest_cache
 
