@@ -13,9 +13,23 @@ def get_channel_history(ch_id: str) -> list[dict]:
     Returns:
         list[dict]: a list of message dictionaries
     """
-    data = app.client.conversations_history(channel=ch_id, oldest=1640995200)
-    print(data)
-    return data["messages"]
+    data = app.client.conversations_history(
+        channel=ch_id, oldest=1640995200, inclusive=True
+    )
+    scores: list[dict] = []
+    scores += data["messages"]
+    has_more = bool(data["has_more"])
+    _cursor = data["response_metadata"]["next_cursor"] if has_more is True else ""
+
+    while has_more:
+        data = app.client.conversations_history(
+            channel=ch_id, oldest=1640995200, inclusive=True, cursor=_cursor
+        )
+        scores += data["messages"]
+        has_more = bool(data["has_more"])
+        _cursor = data["response_metadata"]["next_cursor"] if has_more is True else ""
+
+    return scores
 
 
 def get_thread(ch_id: str, ts: int):
