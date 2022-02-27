@@ -43,10 +43,11 @@ def get_only_wordle_scores(data: list[dict], channel_id: str) -> list[dict]:
     wordle_scores: list[dict] = []
 
     for msg in data:
-        match = re.search("(Wordle) \d+ [123456X]\/6\*?", msg["text"])
+        if "text" in msg.keys():
+            match = re.search("(Wordle) \d+ [123456X]\/6\*?", msg["text"])
 
-        if match:
-            msg["channel"] = channel_id
-            wordle_scores.append(msg)
+            if match:
+                msg["channel"] = channel_id
+                wordle_scores.append(msg)
 
     return wordle_scores

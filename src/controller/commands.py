@@ -41,6 +41,10 @@ def scan_build_history(ack, body) -> None:
 
     for msg in wordle_scores:
         score_fmtted = analyze_wordle_score(msg)
+
+        if score_fmtted is None:
+            continue
+
         user_id: str = msg["user"]
 
         game_exists = False
