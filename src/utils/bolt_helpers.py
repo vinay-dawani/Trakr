@@ -60,19 +60,19 @@ def build_leaderboard_blocks(data: dict) -> dict:
     Returns:
         dict: blocks that can be appended in response message
     """
-    score_str = "##\t\tname\t\t\t\t\taverage guess\t\ttotal games\n----------------------------------------------------------------\n"
+    score_str = "```##\t\tname                     average guess\t\ttotal games\n---------------------------------------------------------------------\n"
     data = dict(sorted(data.items(), key=lambda x: x[1]["avg_guess"]))
 
-    # * The leaderboard message right now mentions the user but since 'respond' API is used,
-    # * the message is sent as ephermal and notif are not pushed.
-    # TIP: A valid workaround can be to get used profile from id and use 'display_name' property
-    # * Also table comes out a bit weird right now because of spacing isuues but when above is
-    # * implemented, then an ascii table can be made or an image that is then attached.
     for i, (k, v) in enumerate(data.items(), 1):
-        xyz = (
-            f"{i}\t\t<@{k}>\t\t\t\t{v['avg_guess']:.3f}\t\t\t\t\t\t{v['total_games']}\n"
-        )
-        score_str += xyz
+        i = "0" + str(i) if len(str(i)) == 1 else ...
+
+        k = get_displayname_from_id(k)
+        k = k + (" " * (25 - len(k)))
+
+        _ = f"{i}\t\t{k}\t{v['avg_guess']:.3f}\t\t\t\t {v['total_games']}\n"
+        score_str += _
+
+    score_str += "```"
 
     blocks = {
         "blocks": [

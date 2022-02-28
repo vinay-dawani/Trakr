@@ -69,7 +69,7 @@ def scan_build_history(ack, body) -> None:
 
 
 @app.command("/topall")
-def get_all_time_leaderboard(ack, respond) -> None:
+def get_all_time_leaderboard(ack, say) -> None:
     """Returns a leaderboard with top average scores of all time"""
 
     ack()
@@ -77,4 +77,4 @@ def get_all_time_leaderboard(ack, respond) -> None:
     data = get_top_leaderboard_data()
     blocks = build_leaderboard_blocks(data)
 
-    respond(blocks=blocks["blocks"])
+    say(blocks=blocks["blocks"])
