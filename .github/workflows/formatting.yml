@@ -1,0 +1,24 @@
+name: formatting check with black
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+     tags:
+      - v*
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  format:
+    name: formatting with black
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: psf/black@stable
+        with:
+          options: "--verbose --check"
+          src: "./src"
