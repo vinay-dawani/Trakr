@@ -1,3 +1,5 @@
+from slack_sdk.errors import SlackApiError
+
 try:
     from utils.bolt_init_helper import app
 except ImportError:
@@ -62,9 +64,10 @@ def build_leaderboard_blocks(data: dict) -> dict:
     """
     score_str = "```##\t\tname                     average guess\t\ttotal games\n---------------------------------------------------------------------\n"
     data = dict(sorted(data.items(), key=lambda x: x[1]["avg_guess"]))
+    data = dict(sorted(data.items(), key=lambda x: x[1]["total_games"], reverse=True))
 
     for i, (k, v) in enumerate(data.items(), 1):
-        i = "0" + str(i) if len(str(i)) == 1 else ...
+        i = "0" + str(i) if len(str(i)) == 1 else str(i)
 
         k = get_displayname_from_id(k)
         k = k + (" " * (25 - len(k)))
@@ -96,6 +99,9 @@ def build_leaderboard_blocks(data: dict) -> dict:
 
 
 def get_displayname_from_id(user_id: str) -> str:
-    data = app.client.users_profile_get(user=user_id)
+    try:
+        data = app.client.users_profile_get(user=user_id)
+    except SlackApiError:
+        return user_id
 
     return data["profile"]["display_name"]
