@@ -77,4 +77,4 @@ def get_all_time_leaderboard(ack, say) -> None:
     data = get_top_leaderboard_data()
     blocks = build_leaderboard_blocks(data)
 
-    say(blocks=blocks["blocks"])
+    say(text="Wordle - Top Scores of all time :smile:", blocks=blocks["blocks"])
